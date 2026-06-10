@@ -1,0 +1,31 @@
+{
+  "nav": { "projects": "проекты", "blog": "блог", "cv": "резюме" },
+  "hero": {
+    "whoami": "$ whoami",
+    "name": "Антон Гаврилов",
+    "tagline": "Senior Frontend / Product Engineer — React, TypeScript, Server-Driven UI. Бэкенд-опыт: Go и Python.",
+    "viewProjects": "Смотреть проекты",
+    "downloadCv": "Скачать резюме"
+  },
+  "home": {
+    "aboutTitle": "$ cat about.md",
+    "about": "6+ лет разработки фронтенда для крупных маркетплейсов, рекламных и платформенных продуктов. В Avito занимаюсь BDUI / Server-Driven UI — рендереры и типизированные UI-контракты, на которых работает треть продуктовых поверхностей. До этого: реклама и монетизация в Яндекс Маркете, ПО для таможни, промышленные IoT-дашборды. Ежедневно работаю с AI-инструментами, ценю производительность, чистые контракты и код, который доходит до продакшена.",
+    "featuredTitle": "$ ls projects/ --featured",
+    "allProjects": "все проекты →",
+    "skillsTitle": "$ cat skills.txt",
+    "contactTitle": "$ ping anton",
+    "contactLine": "Быстрее всего я отвечаю на почту и в LinkedIn. Читаю всё."
+  },
+  "projects": { "title": "Проекты", "role": "роль", "stack": "стек", "links": "ссылки", "repo": "исходники", "live": "демо", "back": "← все проекты" },
+  "blog": { "title": "Блог", "empty": "Первые статьи уже пишутся.", "back": "← все статьи" },
+  "cv": {
+    "title": "Резюме",
+    "download": "Скачать PDF",
+    "experience": "Опыт",
+    "education": "Образование",
+    "skills": "Навыки",
+    "summary": "Кратко"
+  },
+  "footer": { "builtWith": "Сделано на Next.js, Tailwind и Keystatic. Исходники на GitHub." },
+  "notFound": { "title": "404 — no such file or directory", "body": "Такой страницы нет.", "home": "cd ~" }
+}
