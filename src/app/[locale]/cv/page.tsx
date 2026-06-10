@@ -25,7 +25,15 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
         <h2 className="text-2xl font-semibold tracking-tight">{cv.fullName}</h2>
         <p className="mt-1 text-muted">{cv.title}</p>
         <p className="mt-1 font-mono text-xs text-muted">
-          {cv.location} · {site.email} · linkedin.com/in/agavrilov88
+          {cv.location} · {site.email}
+          {site.linkedinUrl ? (
+            <>
+              {' · '}
+              <a href={site.linkedinUrl} className="hover:text-accent">
+                {site.linkedinUrl.replace(/^https?:\/\//, '')}
+              </a>
+            </>
+          ) : null}
         </p>
       </header>
 
