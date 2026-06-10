@@ -6,8 +6,14 @@ Status: approved-pending-review
 ## 1. Goal and audience
 
 A bilingual (EN/RU) personal website that gets Anton Gavrilov hired as a senior
-developer in EU/USA/UAE/Cyprus, polished enough to show FAANG recruiters within
-6–12 months.
+developer in EU/UK/USA/UAE/Cyprus, polished enough to show FAANG recruiters
+within 6–12 months.
+
+Positioning (from his real CV, June 2026): **Senior Frontend / Product
+Engineer — React, TypeScript, BDUI / Server-Driven UI**, with backend range
+(Go, Python/Flask, PostgreSQL) and daily AI-tooled workflows. Currently at
+Avito (BDUI platform); previously Yandex Market (ads & monetization), LifeIT,
+Movicom Electric. Based in Bali, open to relocation/remote.
 
 Two audiences, two reading depths:
 
@@ -28,7 +34,9 @@ Two audiences, two reading depths:
 | Blog | Yes — infrastructure from day one; nav link appears when ≥2 posts |
 | Hosting | Vercel + custom domain (e.g. antongavrilov.dev, to be purchased) |
 | Design | "Terminal minimal" — near-black `#0b0e11` base, emerald accent, JetBrains Mono accents, grotesk body; light theme included, dark default |
-| CV facts | Provided by Anton (pending); no invented employers/dates — placeholders are clearly marked `[PLACEHOLDER]` until then |
+| CV facts | Provided (CV v2, June 2026): Avito · Yandex · LifeIT · Movicom Electric; Bauman MSTU |
+| Responsive | Mobile-first, fully adaptive — phone / tablet / desktop. Recruiters open links on phones; every page (including playground demos) must work touch-first on ~375px screens |
+| Privacy | Public site/repo shows email + LinkedIn + GitHub only. Phone number stays out of the public site, repo, and downloadable PDF; it remains in privately-sent CV versions |
 
 ## 3. Site map
 
@@ -49,9 +57,19 @@ Every route exists under both `/en` and `/ru`. Root `/` redirects by
 - `/keystatic` — admin panel (not indexed, not in nav).
 - Localized 404.
 
-Launch case studies (4): jobhunt (AI job-hunt platform), agVPN/vpn-backend
-(Go + WireGuard + Terraform), Browsec extension (commercial, multi-browser),
-bms-client (enterprise React dashboard). All editable/replaceable via admin.
+Launch case studies (4–5), all editable/replaceable via admin:
+
+- **Server-Driven UI at marketplace scale** (Avito/Yandex experience, written
+  at CV level of detail — no proprietary internals): BDUI renderer
+  architecture, typed UI contracts, cross-platform sync. His strongest
+  differentiator for senior frontend roles.
+- **jobhunt** — AI job-hunt platform (React + FastAPI + Claude agents, SSE).
+- **agVPN / vpn-backend** — Go + WireGuard + Terraform personal infra.
+- **Browsec extension** — commercial cross-browser VPN extension (side work).
+- Optionally **easybook** or **invest-dashboard**.
+
+Work-experience case studies stay at the public-CV level of detail (no
+employer code, no internal metrics beyond what the CV already states).
 
 ## 4. Architecture
 
@@ -130,8 +148,6 @@ bms-client (enterprise React dashboard). All editable/replaceable via admin.
 
 ## 9. Open items
 
-- Anton's real CV / LinkedIn — needed before launch content is final
-  (placeholders until then).
 - Domain purchase + Vercel project (needs Anton's accounts).
 - GitHub repo creation (Anton authorized use of his GitHub).
 - Keystatic GitHub-mode app setup (v1.1, needs GitHub app credentials).
