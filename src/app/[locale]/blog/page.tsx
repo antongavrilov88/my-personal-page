@@ -1,7 +1,21 @@
+import type { Metadata } from 'next';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { getPosts } from '@/lib/content';
 import type { Locale } from '@/i18n/routing';
+import { languageAlternates, pageTitle } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: pageTitle(locale as Locale, locale === 'ru' ? 'Блог' : 'Blog'),
+    alternates: languageAlternates('/blog'),
+  };
+}
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

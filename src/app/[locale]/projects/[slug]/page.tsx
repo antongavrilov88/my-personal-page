@@ -1,9 +1,26 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { getProject, getProjects } from '@/lib/content';
 import { routing, type Locale } from '@/i18n/routing';
 import { MdxContent } from '@/components/mdx-content';
+import { languageAlternates, pageTitle } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const project = await getProject(locale as Locale, slug);
+  if (!project) return {};
+  return {
+    title: pageTitle(locale as Locale, project.title),
+    description: project.summary,
+    alternates: languageAlternates(`/projects/${slug}`),
+  };
+}
 
 export async function generateStaticParams() {
   const params: { slug: string }[] = [];
@@ -44,8 +61,8 @@ export default async function ProjectPage({
         <div>
           <dt className="text-muted">{t('links')}</dt>
           <dd className="mt-1 flex gap-3">
-            {project.repoUrl ? <a href={project.repoUrl} className="text-accent hover:underline">{t('repo')}</a> : null}
-            {project.liveUrl ? <a href={project.liveUrl} className="text-accent hover:underline">{t('live')}</a> : null}
+            {project.repoUrl ? <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{t('repo')}</a> : null}
+            {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{t('live')}</a> : null}
             {!project.repoUrl && !project.liveUrl ? <span className="text-muted">—</span> : null}
           </dd>
         </div>

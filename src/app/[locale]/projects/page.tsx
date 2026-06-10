@@ -1,7 +1,21 @@
+import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { getProjects } from '@/lib/content';
 import type { Locale } from '@/i18n/routing';
 import { ProjectCard } from '@/components/project-card';
+import { languageAlternates, pageTitle } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: pageTitle(locale as Locale, locale === 'ru' ? 'Проекты' : 'Projects'),
+    alternates: languageAlternates('/projects'),
+  };
+}
 
 export default async function ProjectsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

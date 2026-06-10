@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getCv, getSite } from '@/lib/content';
 import type { Locale } from '@/i18n/routing';
+import { languageAlternates, pageTitle } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: pageTitle(locale as Locale, locale === 'ru' ? 'Резюме' : 'CV'),
+    alternates: languageAlternates('/cv'),
+  };
+}
 
 export default async function CvPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

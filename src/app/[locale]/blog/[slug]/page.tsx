@@ -1,9 +1,26 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { getPost, getPosts } from '@/lib/content';
 import { routing, type Locale } from '@/i18n/routing';
 import { MdxContent } from '@/components/mdx-content';
+import { languageAlternates, pageTitle } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const post = await getPost(locale as Locale, slug);
+  if (!post) return {};
+  return {
+    title: pageTitle(locale as Locale, post.title),
+    description: post.title,
+    alternates: languageAlternates(`/blog/${slug}`),
+  };
+}
 
 export async function generateStaticParams() {
   const params: { slug: string }[] = [];
