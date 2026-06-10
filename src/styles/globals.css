@@ -50,3 +50,42 @@ body {
   background: var(--accent);
   color: var(--accent-contrast);
 }
+
+.prose-terminal {
+  max-width: 42rem;
+  line-height: 1.75;
+}
+.prose-terminal h2 {
+  font-family: var(--font-jetbrains), monospace;
+  color: var(--accent);
+  font-size: 0.95rem;
+  margin: 2.5rem 0 1rem;
+}
+.prose-terminal h2::before {
+  content: '## ';
+  color: var(--text-muted);
+}
+.prose-terminal p, .prose-terminal li { color: var(--text-muted); margin-bottom: 1rem; }
+.prose-terminal strong { color: var(--text); font-weight: 600; }
+.prose-terminal ul { list-style: '— ' inside; margin-bottom: 1rem; }
+.prose-terminal pre {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+  background: var(--bg-panel) !important;
+}
+.prose-terminal code { font-family: var(--font-jetbrains), monospace; }
+.prose-terminal em { color: var(--text-muted); font-size: 0.9rem; }
+
+/* rehype-pretty-code dual themes: tokens carry --shiki-dark / --shiki-light vars
+   (defaultColor is disabled when a theme object is passed). Dark is the site default;
+   html[data-theme='light'] switches to the light palette. */
+.prose-terminal code[data-theme] span {
+  color: var(--shiki-dark);
+}
+[data-theme='light'] .prose-terminal code[data-theme] span {
+  color: var(--shiki-light);
+}
