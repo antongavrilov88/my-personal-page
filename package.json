@@ -1,0 +1,42 @@
+{
+  "name": "my-personal-page",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@keystatic/core": "^0.5.50",
+    "@keystatic/next": "^5.0.4",
+    "@vercel/analytics": "^2.0.1",
+    "next": "^15.5.19",
+    "next-intl": "^4.13.0",
+    "next-mdx-remote-client": "^2.1.11",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "rehype-pretty-code": "^0.14.3",
+    "shiki": "^4.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^25.9.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.9",
+    "jsdom": "^28.1.0",
+    "prettier": "^3.8.4",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  }
+}
