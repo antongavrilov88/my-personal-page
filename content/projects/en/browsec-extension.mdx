@@ -1,0 +1,33 @@
+---
+title: Browsec — commercial VPN browser extension
+slug: browsec-extension
+summary: Production cross-browser VPN extension (Chrome, Firefox, Opera) shipped to a multi-million user base.
+role: Extension developer (contract)
+period: side work
+stack:
+  - TypeScript
+  - WebExtensions API
+  - Jest
+  - Selenium
+priority: 40
+featured: false
+liveUrl: https://browsec.com
+---
+## The context
+
+Browsec is a commercial VPN with a browser extension as its primary product.
+I worked on the extension across Chrome, Firefox, and Opera builds.
+
+## The interesting parts
+
+- **One codebase, three browsers.** Manifest and API differences (MV2/MV3,
+  proxy APIs, storage quirks) are isolated behind a small platform layer;
+  product code stays browser-agnostic.
+- **Release discipline.** A multi-browser build pipeline with Selenium smoke
+  tests gates every release — when your users count in millions, a broken
+  proxy config is an outage, not a bug report.
+
+## Outcome
+
+Multiple production releases shipped (v3.9x line). Commercial production
+experience with the WebExtensions platform at large user scale.
