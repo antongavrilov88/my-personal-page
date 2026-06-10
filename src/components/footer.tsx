@@ -5,7 +5,7 @@ export async function Footer() {
   const t = await getTranslations('footer');
   const site = await getSite();
   return (
-    <footer className="border-t border-line">
+    <footer className="site-footer border-t border-line">
       <div className="mx-auto flex max-w-4xl flex-col gap-2 px-4 py-6 font-mono text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
         <span>© {new Date().getFullYear()} Anton Gavrilov</span>
         <span className="flex gap-4">

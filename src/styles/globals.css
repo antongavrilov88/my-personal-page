@@ -89,3 +89,26 @@ body {
 [data-theme='light'] .prose-terminal code[data-theme] span {
   color: var(--shiki-light);
 }
+
+@media print {
+  :root {
+    --bg: #ffffff;
+    --bg-panel: #ffffff;
+    --border: #cccccc;
+    --text: #111111;
+    --text-muted: #333333;
+    --accent: #111111;
+    --accent-contrast: #ffffff;
+  }
+  .site-header,
+  .site-footer {
+    display: none !important;
+  }
+  body {
+    font-size: 11px;
+  }
+  article#cv {
+    padding: 0;
+    max-width: none;
+  }
+}
