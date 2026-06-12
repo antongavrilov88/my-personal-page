@@ -1,0 +1,53 @@
+---
+title: Server-Driven UI at marketplace scale
+slug: server-driven-ui
+summary: BDUI renderer architecture and typed UI contracts powering ~30% of product surfaces at a top-5 classifieds platform.
+role: Software Engineer, BDUI platform team
+period: 2025 — now
+stack:
+  - React
+  - TypeScript
+  - Server-Driven UI
+  - Design systems
+priority: 10
+featured: true
+---
+## The problem
+
+Marketplace product teams ship dozens of UI changes weekly across web, iOS, and
+Android. Classic frontend delivery couples every change to three release
+trains — the slowest one (mobile app review) sets the pace for all.
+
+## The approach
+
+Backend-Driven UI (BDUI): the backend sends a typed UI schema; each platform
+runs a renderer that turns the schema into native components.
+
+```text
+ product config        backend             clients
+┌──────────────┐   ┌──────────────┐   ┌────────────────────┐
+│ feature flags │ → │ UI contract  │ → │ web renderer (TS)  │
+│ experiments   │   │ (typed JSON) │   │ iOS renderer       │
+│ layout rules  │   │ + validation │   │ Android renderer   │
+└──────────────┘   └──────────────┘   └────────────────────┘
+```
+
+My work lives in the contract and the web renderer:
+
+- **Typed contracts.** Every schema node maps to a TypeScript interface with
+  loading, error, and edge states required by the type system — a component
+  contract that cannot silently skip its failure modes.
+- **Renderer architecture.** Composition over configuration: the renderer
+  resolves a node tree, not feature-specific components, so new feature UIs
+  ship with zero renderer changes.
+- **Cross-platform parity.** Web and mobile interpret one schema; visual or
+  behavioral drift is a contract bug, not a per-platform reimplementation.
+
+## Outcome
+
+BDUI surfaces now cover roughly 27–30% of the product. Feature delivery is
+decoupled from mobile release cycles — backend config changes reach all
+platforms at once.
+
+*This case study describes my work at the public-CV level of detail; no
+proprietary internals.*

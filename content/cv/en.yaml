@@ -1,0 +1,62 @@
+fullName: Anton Gavrilov
+title: Senior Frontend / Product Engineer · React, TypeScript, BDUI / Server-Driven UI
+location: Bali, Indonesia · Open to Europe / UK / UAE
+summary: >-
+  Senior Frontend / Product Engineer with 6+ years in large-scale marketplace,
+  advertising, and platform environments. Deep in React, TypeScript, and BDUI /
+  Server-Driven UI — building renderers, component systems, and backend-driven
+  UI contracts that scale across web and mobile. Brings backend context in Go
+  and Python/Flask, ships AI-tooled workflows daily, and has consistently owned
+  cross-functional feature delivery from architecture through production.
+skills:
+  - category: Frontend
+    items: React, TypeScript, JavaScript, HTML, CSS, browser APIs, frontend architecture, component systems, state management (Redux, Effector)
+  - category: Performance & quality
+    items: browser profiling, React performance, Core Web Vitals, TBT, LCP, SEO-aware UI, unit/integration testing, production debugging
+  - category: Platform & product
+    items: BDUI / Server-Driven UI, cross-platform renderer architecture, reusable UI systems, technical decomposition, mentoring, technical interviews
+  - category: Backend & data
+    items: Go, Python, Flask, PostgreSQL, REST APIs, data processing pipelines
+  - category: AI tooling
+    items: Cursor, Claude, GitHub Copilot, OpenAI Codex
+experience:
+  - company: Avito
+    role: Software Engineer
+    period: Nov 2025 — present
+    location: Remote
+    bullets:
+      - BDUI renderers now power ~27–30% of Avito product surfaces.
+      - Translate backend UI schemas into typed React/TypeScript interfaces — explicit loading, error, and edge-state handling baked into every component contract.
+      - Move frontend behavior into backend-driven contracts, decoupling feature delivery from mobile release cycles and keeping web and mobile rendering in sync.
+      - Coordinate across product, design, backend, web, and mobile to ship platform features end-to-end.
+  - company: Yandex
+    role: Frontend Web Developer · Market, Advertising & Monetization
+    period: Sep 2023 — Oct 2025
+    location: Almaty, Kazakhstan
+    bullets:
+      - Drove ~1–3% CPM lift by shipping video embedding into ad snippets — first video-in-ad surface on the Yandex Market platform.
+      - Rebuilt the web ad carousel to accept a new cross-platform image format across 3 product surfaces.
+      - Reworked queue dispatcher and snippet renderer to support dynamic UI composition without regressions.
+      - Led performance investigation on SEO-sensitive ad surfaces; cut TBT and first-load payload.
+      - Ran on-call rotations, conducted technical interviews, mentored junior engineers.
+  - company: LifeIT
+    role: Frontend Developer → Senior Frontend Developer
+    period: Aug 2021 — Aug 2023
+    location: Moscow, Russia
+    bullets:
+      - Reduced initial page load from 7 s to under 1 s by redesigning the map module's data-loading strategy.
+      - Led a major customs software project from architecture through delivery; promoted to Senior after 15 months.
+      - Built Python/Flask and PostgreSQL services for large-dataset processing feeding a React/Redux frontend.
+      - Mentored junior engineers and supervised an intern.
+  - company: Movicom Electric
+    role: Web Developer
+    period: Nov 2019 — Jul 2021
+    location: Moscow, Russia
+    bullets:
+      - Built the React frontend for a cloud platform monitoring warehouse battery performance across distributed sensor networks.
+      - Implemented operational dashboards and real-time analytics visualizations.
+      - Integrated with a Flask/PostgreSQL backend and maintained an FTP-based raw-data ingestion pipeline.
+education:
+  - school: Bauman Moscow State Technical University
+    degree: Bachelor's, Applied Machines
+    period: 2005 — 2011

@@ -1,0 +1,49 @@
+---
+title: Jobhunt — AI-powered job search platform
+slug: jobhunt
+summary: Kanban-style job application tracker with Claude agents that tailor CVs, write cover letters, and research companies.
+role: Solo developer — product, frontend, backend, infra
+period: '2026'
+stack:
+  - React
+  - TypeScript
+  - FastAPI
+  - PostgreSQL
+  - Anthropic API
+  - Docker
+priority: 20
+featured: true
+---
+## The problem
+
+A serious job search is a pipeline: dozens of postings, each needing a tailored
+CV, a cover letter, and company research. Spreadsheets don't scale and generic
+trackers don't do the work.
+
+## What I built
+
+A Trello-style board where each card is an application. Opening a card reveals
+a side panel with the job description, a tailored CV, a generated cover
+letter, and a chat with an AI agent that has full context of the application.
+
+```text
+React + TS (Kanban UI)
+   │  REST + SSE streaming
+FastAPI (async) ── Claude agents ── CV tailoring / cover letters / research
+   │
+PostgreSQL + Alembic migrations · Docker Compose
+```
+
+Key decisions:
+
+- **SSE over WebSockets** for agent streaming — one-directional token flow
+  needs no duplex channel, and SSE survives proxies and reconnects for free.
+- **Agent tools, not prompt soup.** Each agent capability (read CV, fetch
+  posting, search company) is a typed tool; the model composes them.
+- **Async SQLAlchemy 2.0** end-to-end — agent calls are long-lived, the API
+  stays responsive.
+
+## Outcome
+
+Production-ready and used daily for my own search. The repo demonstrates
+full-stack ownership: typed API client, migrations, Docker deploy, CI.

@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "projects": "projects",
+    "blog": "blog",
+    "cv": "cv"
+  },
+  "hero": {
+    "whoami": "$ whoami",
+    "name": "Anton Gavrilov",
+    "tagline": "Senior Frontend / Product Engineer — React, TypeScript, Server-Driven UI. Backend range in Go and Python.",
+    "viewProjects": "View projects",
+    "downloadCv": "Download CV"
+  },
+  "home": {
+    "aboutTitle": "$ cat about.md",
+    "about": "6+ years building large-scale marketplace, advertising, and platform frontends. At Avito I work on BDUI / Server-Driven UI — renderers and typed UI contracts that power a third of the product's surfaces. Before that: Yandex Market ads & monetization, customs software, industrial IoT dashboards. I ship with AI-tooled workflows daily and care about performance, clean contracts, and things that actually reach production.",
+    "featuredTitle": "$ ls projects/ --featured",
+    "allProjects": "all projects →",
+    "skillsTitle": "$ cat skills.txt",
+    "contactTitle": "$ ping anton",
+    "contactLine": "The fastest way to reach me is email or LinkedIn. I read everything.",
+    "bookCall": "book a call"
+  },
+  "projects": {
+    "title": "Projects",
+    "role": "role",
+    "stack": "stack",
+    "links": "links",
+    "repo": "source",
+    "live": "live",
+    "back": "← all projects"
+  },
+  "blog": {
+    "title": "Blog",
+    "empty": "First posts are being written.",
+    "back": "← all posts"
+  },
+  "cv": {
+    "title": "Curriculum vitae",
+    "download": "Download PDF",
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "summary": "Summary"
+  },
+  "footer": {
+    "builtWith": "Built with Next.js, Tailwind, and Keystatic. Source on GitHub."
+  },
+  "notFound": {
+    "title": "404 — no such file or directory",
+    "body": "This page does not exist.",
+    "home": "cd ~"
+  }
+}

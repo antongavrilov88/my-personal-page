@@ -1,0 +1,47 @@
+---
+title: agVPN — personal VPN service on bare infrastructure
+slug: agvpn
+summary: WireGuard-based VPN for family use — Go backend, Telegram bot UX, Terraform-provisioned cloud, operational runbooks.
+role: Solo developer & operator
+period: 2025 — 2026
+stack:
+  - Go
+  - WireGuard
+  - Terraform
+  - PostgreSQL
+  - Telegram Bot API
+  - GitHub Actions
+priority: 30
+featured: true
+---
+## The problem
+
+Commercial VPNs are a black box; running one for family across several devices
+needs provisioning, key lifecycle, and observability — a real systems problem
+small enough to own completely.
+
+## What I built
+
+```text
+Telegram bot (user UX)
+   │
+Go service (chi) ── device provisioning · key lifecycle · health checks
+   │
+PostgreSQL (Goose migrations)        WireGuard peers (cloud VMs)
+   │                                     ▲
+GitHub Actions ── deploy ── Terraform ───┘  (infrastructure as code)
+```
+
+- **Go service** owns device records, WireGuard peer config generation, and
+  lifecycle (create / freeze / revoke), exposed to users through a Telegram
+  bot — zero custom client apps.
+- **Terraform** provisions the cloud VMs; the same code path rebuilds the
+  whole stack from nothing, which doubles as the disaster-recovery plan.
+- **Operations as artifacts:** runbooks, freeze-state scripts, backup and
+  verify jobs — the boring parts that make it production, not a toy.
+
+## Outcome
+
+Runs in production for family devices. The project is my systems-side
+counterweight: networking, IaC, migrations, and ops discipline beyond the
+frontend.
