@@ -1,0 +1,146 @@
+---
+title: 'Building AI agents on the Anthropic API: lessons from a real project'
+slug: building-ai-agents-anthropic-api
+date: 2026-06-12
+summary: Typed tools instead of prompt soup, SSE instead of WebSockets, and short-lived DB sessions — practical lessons from building per-application AI agents on the Anthropic API.
+draft: true
+tags:
+  - ai-agents
+  - anthropic-api
+  - fastapi
+  - sse
+---
+I run my own job search through a tool I built: jobhunt, a kanban board where
+every card is a job application and every application has an AI agent attached.
+The agent tailors my CV to the posting, drafts the cover letter, and researches
+the company. FastAPI backend, React frontend, Claude via the Anthropic API.
+This post is the list of things I'd tell myself before starting.
+
+## Typed tools, not prompt soup
+
+The first version did what every first version does: stuffed everything into
+one prompt. CV, job description, instructions, formatting rules — a wall of
+text ending with "now write a cover letter". It worked on the happy path and
+degraded everywhere else. Long postings pushed the CV out of focus.
+Formatting instructions were followed about 80% of the time, which is a polite
+way of saying "not followed".
+
+The fix was to stop treating the model as a text pipe and start treating it as
+a caller of an API I control. Every capability the agent needs is a tool with
+a JSON schema:
+
+```python
+TOOLS = [
+    {
+        "name": "fetch_posting",
+        "description": "Return the job posting text for the current application.",
+        "input_schema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "read_base_cv",
+        "description": "Return the candidate's base CV as structured JSON.",
+        "input_schema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "save_artifact",
+        "description": "Persist a finished artifact for this application.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "kind": {"enum": ["cv", "cover_letter", "research"]},
+                "content": {"type": "string"},
+            },
+            "required": ["kind", "content"],
+        },
+    },
+]
+```
+
+The orchestration loop is boring on purpose: send the messages, execute any
+`tool_use` blocks, append `tool_result`, repeat until the model stops asking.
+The model decides *what* to look at; my code decides *what that data actually
+is*. System prompts shrank to a short description of the job at hand, and
+output quality stopped depending on whether the model "remembered" something
+buried in a 6k-token wall.
+
+## SSE, because the data only flows one way
+
+The agent streams tokens to the UI. The reflex choice is WebSockets; I went
+with Server-Sent Events and never looked back.
+
+The reasoning is unglamorous. Token streaming is one-directional: the client
+sends one request — "run the agent" — and the server pushes chunks. A duplex
+channel buys nothing here, and it costs real things: connection upgrades that
+corporate proxies dislike, hand-rolled reconnect logic, heartbeats. SSE is
+plain HTTP. It passes through every proxy, reuses the normal auth middleware,
+and the browser reconnects on its own with `Last-Event-ID`.
+
+```ts
+const es = new EventSource(`/api/applications/${id}/agent/stream`);
+es.onmessage = (e) => {
+  const chunk = JSON.parse(e.data) as AgentChunk;
+  if (chunk.type === 'token') appendToken(chunk.text);
+  if (chunk.type === 'tool') showToolBadge(chunk.name);
+  if (chunk.type === 'done') es.close();
+};
+```
+
+One detail worth stealing: stream tool events, not just tokens. Showing
+`→ fetch_posting` in the UI while the agent works turns a 40-second wait from
+"is it broken?" into a progress indicator you get for free.
+
+## Long agent runs vs. your database
+
+An agent run with two or three tool round-trips takes 30–90 seconds. On a sync
+stack, each run pins a worker for that whole window; a handful of parallel
+runs and the API starves. So jobhunt is async end-to-end — FastAPI plus
+SQLAlchemy 2.0 with async sessions.
+
+The non-obvious part: don't hold one session across the whole run. My first
+implementation opened a session when the agent started and committed when it
+finished. The result was connections parked in idle-in-transaction for
+minutes. Sessions belong inside tool handlers, opened late and closed early:
+
+```python
+async def fetch_posting(app_id: int) -> str:
+    async with Session() as session:
+        row = await session.get(Application, app_id)
+        return row.posting_text
+```
+
+The agent run itself owns no connection. Each tool borrows one for
+milliseconds and gives it back.
+
+## Context is per application, not per chat
+
+Early on there was one global chat with the agent. It kept confusing jobs:
+"this position" could mean any of a dozen postings, and artifacts landed on
+the wrong card more than once.
+
+The model that works: each application card is its own agent context. The
+system prompt is assembled by a plain function from the application row — the
+posting, the base CV, previously generated artifacts, prior messages on this
+card. Context assembly is code, not vibes. The agent never has to guess which
+job we're talking about, because it has only ever seen one.
+
+## What didn't work
+
+- **Letting the model persist data directly.** An early `save_cv` tool fired
+  mid-reasoning and saved half-finished drafts. Now the agent returns
+  artifacts and explicitly marks them final; the app decides what gets stored.
+- **One mega-agent.** A single agent doing tailoring, letters, and research
+  needed a contradictory prompt. Three focused agents sharing the same context
+  builders are dumber individually and better in aggregate.
+- **Format-by-prose.** "Respond with valid JSON" works until it doesn't. If
+  the output has structure, make it a tool call with a schema — the API
+  validates it, and the failure mode becomes an error instead of a parse bug.
+- **Blind retries.** Retrying a failed run without idempotency keys produced
+  duplicate cover letters. Every run gets an id; artifacts upsert on it.
+
+## If I started again
+
+I'd keep the architecture: typed tools, SSE, async sessions, per-application
+context. I'd skip every step where I trusted prose instructions to do a
+schema's job. The single most useful habit was treating the agent like an
+unreliable junior colleague with excellent recall: give it small, well-typed
+interfaces and verify everything it hands back.

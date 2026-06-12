@@ -1,5 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { getProjects, getFeaturedProjects, getSite, getCv, checkProjectParity, isBlogLive } from './content';
+import {
+  getProjects,
+  getFeaturedProjects,
+  getSite,
+  getCv,
+  checkProjectParity,
+  checkPostParity,
+  isBlogLive,
+} from './content';
 
 describe('content integrity', () => {
   it('has at least 4 projects in both locales, sorted by priority', async () => {
@@ -19,6 +27,12 @@ describe('content integrity', () => {
 
   it('en and ru project slugs match exactly', async () => {
     const parity = await checkProjectParity();
+    expect(parity.missingInRu).toEqual([]);
+    expect(parity.missingInEn).toEqual([]);
+  });
+
+  it('en and ru post slugs match exactly', async () => {
+    const parity = await checkPostParity();
     expect(parity.missingInRu).toEqual([]);
     expect(parity.missingInEn).toEqual([]);
   });
