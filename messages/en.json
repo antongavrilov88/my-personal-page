@@ -1,5 +1,9 @@
 {
-  "nav": { "projects": "projects", "blog": "blog", "cv": "cv" },
+  "nav": {
+    "projects": "projects",
+    "blog": "blog",
+    "cv": "cv"
+  },
   "hero": {
     "whoami": "$ whoami",
     "name": "Anton Gavrilov",
@@ -14,10 +18,23 @@
     "allProjects": "all projects →",
     "skillsTitle": "$ cat skills.txt",
     "contactTitle": "$ ping anton",
-    "contactLine": "The fastest way to reach me is email or LinkedIn. I read everything."
+    "contactLine": "The fastest way to reach me is email or LinkedIn. I read everything.",
+    "bookCall": "book a call"
   },
-  "projects": { "title": "Projects", "role": "role", "stack": "stack", "links": "links", "repo": "source", "live": "live", "back": "← all projects" },
-  "blog": { "title": "Blog", "empty": "First posts are being written.", "back": "← all posts" },
+  "projects": {
+    "title": "Projects",
+    "role": "role",
+    "stack": "stack",
+    "links": "links",
+    "repo": "source",
+    "live": "live",
+    "back": "← all projects"
+  },
+  "blog": {
+    "title": "Blog",
+    "empty": "First posts are being written.",
+    "back": "← all posts"
+  },
   "cv": {
     "title": "Curriculum vitae",
     "download": "Download PDF",
@@ -26,6 +43,12 @@
     "skills": "Skills",
     "summary": "Summary"
   },
-  "footer": { "builtWith": "Built with Next.js, Tailwind, and Keystatic. Source on GitHub." },
-  "notFound": { "title": "404 — no such file or directory", "body": "This page does not exist.", "home": "cd ~" }
+  "footer": {
+    "builtWith": "Built with Next.js, Tailwind, and Keystatic. Source on GitHub."
+  },
+  "notFound": {
+    "title": "404 — no such file or directory",
+    "body": "This page does not exist.",
+    "home": "cd ~"
+  }
 }

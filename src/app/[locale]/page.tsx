@@ -74,10 +74,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <p className="mb-4 max-w-2xl leading-relaxed text-muted">{tHome('contactLine')}</p>
         <div className="flex flex-wrap gap-3 font-mono text-sm">
           <a href={`mailto:${site.email}`} className="rounded border border-line px-3 py-1.5 hover:border-line-strong hover:text-accent">{site.email}</a>
-          <a href={site.linkedinUrl ?? '#'} className="rounded border border-line px-3 py-1.5 hover:border-line-strong hover:text-accent">linkedin</a>
-          <a href={site.githubUrl ?? '#'} className="rounded border border-line px-3 py-1.5 hover:border-line-strong hover:text-accent">github</a>
+          <a href={site.linkedinUrl ?? '#'} target="_blank" rel="noopener noreferrer" className="rounded border border-line px-3 py-1.5 hover:border-line-strong hover:text-accent">linkedin</a>
+          <a href={site.githubUrl ?? '#'} target="_blank" rel="noopener noreferrer" className="rounded border border-line px-3 py-1.5 hover:border-line-strong hover:text-accent">github</a>
           {site.bookingUrl ? (
-            <a href={site.bookingUrl} className="rounded border border-line px-3 py-1.5 hover:border-line-strong hover:text-accent">book a call</a>
+            <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer" className="rounded border border-line px-3 py-1.5 hover:border-line-strong hover:text-accent">{tHome('bookCall')}</a>
           ) : null}
         </div>
       </TerminalSection>

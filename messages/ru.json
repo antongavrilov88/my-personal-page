@@ -1,5 +1,9 @@
 {
-  "nav": { "projects": "проекты", "blog": "блог", "cv": "резюме" },
+  "nav": {
+    "projects": "проекты",
+    "blog": "блог",
+    "cv": "резюме"
+  },
   "hero": {
     "whoami": "$ whoami",
     "name": "Антон Гаврилов",
@@ -14,10 +18,23 @@
     "allProjects": "все проекты →",
     "skillsTitle": "$ cat skills.txt",
     "contactTitle": "$ ping anton",
-    "contactLine": "Быстрее всего я отвечаю на почту и в LinkedIn. Читаю всё."
+    "contactLine": "Быстрее всего я отвечаю на почту и в LinkedIn. Читаю всё.",
+    "bookCall": "записаться на звонок"
   },
-  "projects": { "title": "Проекты", "role": "роль", "stack": "стек", "links": "ссылки", "repo": "исходники", "live": "демо", "back": "← все проекты" },
-  "blog": { "title": "Блог", "empty": "Первые статьи уже пишутся.", "back": "← все статьи" },
+  "projects": {
+    "title": "Проекты",
+    "role": "роль",
+    "stack": "стек",
+    "links": "ссылки",
+    "repo": "исходники",
+    "live": "демо",
+    "back": "← все проекты"
+  },
+  "blog": {
+    "title": "Блог",
+    "empty": "Первые статьи уже пишутся.",
+    "back": "← все статьи"
+  },
   "cv": {
     "title": "Резюме",
     "download": "Скачать PDF",
@@ -26,6 +43,12 @@
     "skills": "Навыки",
     "summary": "Кратко"
   },
-  "footer": { "builtWith": "Сделано на Next.js, Tailwind и Keystatic. Исходники на GitHub." },
-  "notFound": { "title": "404 — no such file or directory", "body": "Такой страницы нет.", "home": "cd ~" }
+  "footer": {
+    "builtWith": "Сделано на Next.js, Tailwind и Keystatic. Исходники на GitHub."
+  },
+  "notFound": {
+    "title": "404 — no such file or directory",
+    "body": "Такой страницы нет.",
+    "home": "cd ~"
+  }
 }

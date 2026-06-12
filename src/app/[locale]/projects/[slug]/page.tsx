@@ -22,6 +22,8 @@ export async function generateMetadata({
   };
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const params: { slug: string }[] = [];
   for (const locale of routing.locales) {
