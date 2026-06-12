@@ -2379,7 +2379,7 @@ Using the preview/browser tooling: 375px, 768px, 1280px on `/en` and one case st
 
 - [ ] **Step 4: Grep for the phone number (must be absent)**
 
-Run: `grep -ri "194-4166\|1944166" --exclude-dir=node_modules --exclude-dir=.git . ; echo "exit: $?"`
+Run: `grep -ri "<phone-digit-fragment>" --exclude-dir=node_modules --exclude-dir=.git . ; echo "exit: $?"`
 Expected: no matches (exit 1).
 
 - [ ] **Step 5: Final commit and report**

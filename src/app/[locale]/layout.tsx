@@ -8,6 +8,7 @@ import type { Locale } from '@/i18n/routing';
 import { inter, jetbrains } from '@/lib/fonts';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { Analytics } from '@vercel/analytics/react';
 import { getSite } from '@/lib/content';
 import { SITE_URL, languageAlternates, pageTitle } from '@/lib/seo';
 
@@ -77,6 +78,7 @@ export default async function LocaleLayout({
           <main className="mx-auto w-full max-w-4xl flex-1 px-4">{children}</main>
           <Footer />
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
