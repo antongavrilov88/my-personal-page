@@ -2,6 +2,7 @@
   "nav": {
     "projects": "projects",
     "blog": "blog",
+    "playground": "playground",
     "cv": "cv"
   },
   "hero": {
@@ -34,6 +35,19 @@
     "title": "Blog",
     "empty": "First posts are being written.",
     "back": "← all posts"
+  },
+  "playground": {
+    "title": "Playground",
+    "back": "← all demos",
+    "shuffle": "shuffle",
+    "size": "size",
+    "speed": "speed",
+    "start": "start",
+    "pause": "pause",
+    "reset": "reset",
+    "steps": "steps",
+    "done": "done",
+    "error": "demo crashed — the rest of the page is fine"
   },
   "cv": {
     "title": "Curriculum vitae",

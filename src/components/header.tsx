@@ -24,6 +24,9 @@ export async function Header({ locale }: { locale: Locale }) {
               {t('blog')}
             </Link>
           )}
+          <Link href="/playground" className="text-muted hover:text-fg">
+            {t('playground')}
+          </Link>
           <Link href="/cv" className="text-muted hover:text-fg">
             {t('cv')}
           </Link>
