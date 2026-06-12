@@ -8,7 +8,7 @@ export function LocaleSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
   return (
-    <span className="font-mono text-xs border border-line rounded px-2 py-1">
+    <span className="font-mono text-xs border border-line rounded px-2 py-1 whitespace-nowrap">
       {routing.locales.map((l, i) => (
         <span key={l}>
           {i > 0 && <span className="text-muted"> / </span>}

@@ -11,10 +11,11 @@ export async function Header({ locale }: { locale: Locale }) {
   return (
     <header className="site-header sticky top-0 z-10 border-b border-line bg-bg/90 backdrop-blur">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-3">
-        <Link href="/" className="font-mono text-sm text-accent">
-          ~/anton-gavrilov
+        <Link href="/" className="font-mono text-sm text-accent whitespace-nowrap">
+          <span className="sm:hidden">~/ag</span>
+          <span className="hidden sm:inline">~/anton-gavrilov</span>
         </Link>
-        <nav className="flex items-center gap-4 font-mono text-xs sm:gap-6 sm:text-sm">
+        <nav className="flex items-center gap-3 font-mono text-xs sm:gap-6 sm:text-sm">
           <Link href="/projects" className="text-muted hover:text-fg">
             {t('projects')}
           </Link>

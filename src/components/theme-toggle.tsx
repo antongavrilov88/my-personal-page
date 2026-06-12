@@ -30,7 +30,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-pressed={isLight}
       aria-label="Toggle color theme"
-      className="font-mono text-xs text-muted hover:text-accent border border-line rounded px-2 py-1 cursor-pointer"
+      className="font-mono text-xs text-muted hover:text-accent border border-line rounded px-2 py-1 cursor-pointer whitespace-nowrap"
     >
       ☾/☀
     </button>
