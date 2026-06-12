@@ -5,8 +5,11 @@ export const contentType = 'image/png';
 export const alt = 'Anton Gavrilov — Senior Frontend / Product Engineer';
 
 export default async function OgImage({ params }: { params: Promise<{ locale: string }> }) {
-  await params;
-  const tagline = 'Senior Frontend / Product Engineer · React · TypeScript · SDUI';
+  const { locale } = await params;
+  const tagline =
+    locale === 'ru'
+      ? 'Senior Frontend / Product Engineer — React · TypeScript · SDUI · открыт к предложениям'
+      : 'Senior Frontend / Product Engineer · React · TypeScript · SDUI';
   return new ImageResponse(
     (
       <div
