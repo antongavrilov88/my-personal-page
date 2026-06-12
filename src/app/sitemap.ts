@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entries.push({ url: `${SITE_URL}/${locale}`, changeFrequency: 'monthly', priority: 1 });
     entries.push({ url: `${SITE_URL}/${locale}/projects`, changeFrequency: 'monthly', priority: 0.9 });
     entries.push({ url: `${SITE_URL}/${locale}/cv`, changeFrequency: 'monthly', priority: 0.9 });
+    entries.push({ url: `${SITE_URL}/${locale}/blog`, changeFrequency: 'weekly', priority: 0.9 });
     for (const p of await getProjects(locale)) {
       entries.push({
         url: `${SITE_URL}/${locale}/projects/${p.slug}`,

@@ -17,7 +17,6 @@ export async function generateMetadata({
   if (!post) return {};
   return {
     title: pageTitle(locale as Locale, post.title),
-    description: post.title,
     alternates: languageAlternates(`/blog/${slug}`),
   };
 }

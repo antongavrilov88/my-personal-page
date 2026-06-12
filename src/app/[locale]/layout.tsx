@@ -8,6 +8,7 @@ import type { Locale } from '@/i18n/routing';
 import { inter, jetbrains } from '@/lib/fonts';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { getSite } from '@/lib/content';
 import { SITE_URL, languageAlternates, pageTitle } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -33,16 +34,6 @@ export async function generateMetadata({
   };
 }
 
-const personJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Anton Gavrilov',
-  jobTitle: 'Senior Frontend / Product Engineer',
-  url: SITE_URL,
-  sameAs: ['https://linkedin.com/in/agavrilov88'],
-  knowsAbout: ['React', 'TypeScript', 'Server-Driven UI', 'Go', 'Python'],
-};
-
 const themeInit = `(function(){try{var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();`;
 
 export function generateStaticParams() {
@@ -59,6 +50,17 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+
+  const site = await getSite();
+  const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Anton Gavrilov',
+    jobTitle: 'Senior Frontend / Product Engineer',
+    url: SITE_URL,
+    sameAs: [site.linkedinUrl, site.githubUrl].filter(Boolean),
+    knowsAbout: ['React', 'TypeScript', 'Server-Driven UI', 'Go', 'Python'],
+  };
 
   return (
     <html lang={locale} suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable}`}>
