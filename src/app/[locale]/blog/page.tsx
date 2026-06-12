@@ -31,9 +31,12 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         <ul className="space-y-4">
           {posts.map((post) => (
             <li key={post.slug}>
-              <Link href={`/blog/${post.slug}`} className="group flex flex-wrap items-baseline gap-x-4">
-                <span className="font-mono text-xs text-muted">{post.date}</span>
-                <span className="text-fg group-hover:text-accent">{post.title}</span>
+              <Link href={`/blog/${post.slug}`} className="group block">
+                <span className="flex flex-wrap items-baseline gap-x-4">
+                  <span className="font-mono text-xs text-muted">{post.date}</span>
+                  <span className="text-fg group-hover:text-accent">{post.title}</span>
+                </span>
+                {post.summary && <span className="mt-1 block text-sm text-muted">{post.summary}</span>}
               </Link>
             </li>
           ))}

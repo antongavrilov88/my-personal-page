@@ -18,6 +18,7 @@ export type PostListItem = {
   slug: string;
   title: string;
   date: string;
+  summary: string;
   tags: readonly string[];
 };
 
@@ -66,6 +67,7 @@ export async function getPosts(locale: Locale): Promise<PostListItem[]> {
       slug,
       title: entry.title,
       date: entry.date ?? '',
+      summary: entry.summary ?? '',
       tags: entry.tags as readonly string[],
     }))
     .sort((a, b) => b.date.localeCompare(a.date));
@@ -96,6 +98,16 @@ export async function checkProjectParity(): Promise<{ missingInRu: string[]; mis
   const reader = getReader();
   const en = new Set(await reader.collections.projectsEn.list());
   const ru = new Set(await reader.collections.projectsRu.list());
+  return {
+    missingInRu: [...en].filter((s) => !ru.has(s)),
+    missingInEn: [...ru].filter((s) => !en.has(s)),
+  };
+}
+
+export async function checkPostParity(): Promise<{ missingInRu: string[]; missingInEn: string[] }> {
+  const reader = getReader();
+  const en = new Set(await reader.collections.postsEn.list());
+  const ru = new Set(await reader.collections.postsRu.list());
   return {
     missingInRu: [...en].filter((s) => !ru.has(s)),
     missingInEn: [...ru].filter((s) => !en.has(s)),

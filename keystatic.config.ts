@@ -21,6 +21,7 @@ const postSchema = {
   title: fields.text({ label: 'Title', validation: { isRequired: true } }),
   slug: fields.slug({ name: { label: 'Slug' } }),
   date: fields.date({ label: 'Date', validation: { isRequired: true } }),
+  summary: fields.text({ label: 'Summary (meta description)', multiline: true }),
   draft: fields.checkbox({ label: 'Draft', defaultValue: true }),
   tags: fields.array(fields.text({ label: 'Tag' }), { label: 'Tags', itemLabel: (p) => p.value }),
   content: fields.mdx({ label: 'Post' }),

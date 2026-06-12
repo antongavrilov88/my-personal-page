@@ -1,0 +1,137 @@
+---
+title: 'Server-Driven UI: what typed contracts actually buy you'
+slug: server-driven-ui-typed-contracts
+date: 2026-06-12
+summary: The three-release-train problem, schema-to-renderer architecture, and how TypeScript interface design makes loading, error, and edge states impossible to skip.
+draft: true
+tags:
+  - server-driven-ui
+  - typescript
+  - frontend-architecture
+---
+At my current job, backend-driven UI (BDUI) powers roughly 27–30% of product
+surfaces. That number is on my CV; the interesting part is *why* the
+architecture earns it. The short answer: not the rendering trick — the typed
+contracts. This post stays at the public level of detail; the patterns are
+general, no proprietary internals.
+
+## The three-release-train problem
+
+A feature that touches web, iOS, and Android ships three times. Web deploys
+daily. iOS goes through App Store review. Android rolls out in stages. The
+feature is "done" when the slowest train arrives — usually weeks after the
+code was finished. Then the long tail starts: old app versions live in the
+wild for months, so every client-side feature is a permanent compatibility
+liability.
+
+Multiply that by dozens of product teams shipping weekly, and the release
+calendar becomes the real architecture of the company.
+
+Server-driven UI attacks the coupling directly: the *description* of the
+screen moves to the backend. Clients ship a renderer once. After that, a
+change to the schema reaches web, iOS, and Android in the same moment, with
+no app release in the critical path.
+
+## Schema in, components out
+
+The shape of the system is simple to state:
+
+- the backend assembles a typed UI contract — a validated JSON tree of nodes —
+  out of feature flags, experiments, and layout rules;
+- each platform runs a renderer that maps schema nodes to native components:
+  TypeScript/React on web, native views on mobile.
+
+The renderer knows *primitives* — text, list, card, action — and nothing
+about features. That ignorance is the point, and we'll come back to it.
+
+The naive version of this is "JSON describes the UI", and the naive version
+fails. JSON describes the happy path. Real screens spend a remarkable share
+of their life loading, failing, and being empty.
+
+## Types that make bad states unskippable
+
+The highest-leverage decision in a BDUI system is what the contract *refuses*
+to express. Here is the pattern, reduced to its skeleton:
+
+```ts
+type Slot<T> =
+  | { state: 'loading' }
+  | { state: 'error'; message: TextNode; retry?: Action }
+  | { state: 'empty'; placeholder: TextNode }
+  | { state: 'ready'; data: T };
+
+interface ProductList {
+  kind: 'product-list';
+  header: TextNode;
+  items: Slot<ProductCard[]>;
+}
+```
+
+`items` is not an array. It is a discriminated union, and the renderer has no
+way to get at the data without going through a `switch` on `state`. Add an
+exhaustiveness check and the compiler closes the last exit:
+
+```ts
+function renderSlot<T>(slot: Slot<T>, ready: (data: T) => UINode): UINode {
+  switch (slot.state) {
+    case 'loading': return spinner();
+    case 'error':   return errorView(slot.message, slot.retry);
+    case 'empty':   return slot.placeholder;
+    case 'ready':   return ready(slot.data);
+    default:        return assertNever(slot); // new state? this fails to build
+  }
+}
+```
+
+The cultural effect is bigger than the technical one. Loading, error, and
+empty stop being "polish we'll add after the deadline" — a screen that doesn't
+define them *does not compile*. Nobody has to remember; nobody has to review
+for it. The type system is the checklist.
+
+## Composition over configuration
+
+There are two ways an SDUI vocabulary grows, and only one of them survives.
+
+The configuration path: a `List` node sprouts options — `compactMode`,
+`showDividers`, `badgeStyle`, `headerVariant`. Every flag doubles the state
+space; N flags is 2^N combinations, most untested, some nonsensical. Each
+platform implements the flags slightly differently, and the matrix rots.
+
+The composition path: nodes are small and they *nest*. A list takes child
+nodes; a card takes child nodes; a badge is a node you put where you want it.
+The renderer resolves a tree. When a product team invents a new screen, they
+compose existing primitives in a new shape — and the renderer ships **zero
+changes**, because it never knew about features in the first place.
+
+Configuration asks the platform team for permission. Composition doesn't.
+That difference is most of the velocity win.
+
+## What drifts when contracts aren't typed
+
+I've seen the untyped version of this movie, and the decay is predictable:
+
+- **Optional fields fork per platform.** Web treats a missing field as empty,
+  one mobile platform hides the block, the other renders a blank. Three
+  defensible readings of the same JSON, three different screens.
+- **Error states decay first.** Nothing forces them to exist, so they
+  quietly become spinners that never resolve, then blank screens.
+- **Versioning becomes archaeology.** Which fields do year-old clients
+  understand? Without typed contracts the answer is tribal knowledge. With
+  them it's mechanical: versioned schemas and an explicit fallback node that
+  old renderers show for unknown kinds.
+- **Parity erodes silently.** With one typed schema, visual or behavioral
+  divergence between platforms is a contract bug you can point at — not a
+  per-platform reimplementation argument.
+
+## What it costs
+
+Honesty section. The renderer is a real product with its own roadmap, tests,
+and on-call. Debugging crosses a network boundary: "why does this screen look
+wrong" now starts in a JSON payload. And schema design is API design — it
+carries the same review weight and the same cost of mistakes, because a bad
+node shape, once shipped to clients, is forever.
+
+If you ship one platform, skip all of this. The architecture pays for itself
+at the point where three release trains and a long tail of old app versions
+are the bottleneck — which is exactly where typed contracts stop being a
+nicety and become the load-bearing wall.
